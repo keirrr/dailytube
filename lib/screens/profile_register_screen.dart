@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
+import '../flutterfire/add_user.dart';
 
 class ProfileRegister extends StatefulWidget {
   const ProfileRegister({Key? key}) : super(key: key);
@@ -191,7 +192,9 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: ElevatedButton(
-                              onPressed: () => {},
+                              onPressed: () => {
+                                AddUser("Johny", "Spalony").addUser(),
+                              },
                               child: Text(
                                 "Załóż konto",
                                 style: Theme.of(context).textTheme.headline3,
