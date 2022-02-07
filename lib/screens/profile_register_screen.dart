@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../bartek_color_palette.dart';
 import '../flutterfire/add_user.dart';
 
+import 'package:form_field_validator/form_field_validator.dart';
+
 class ProfileRegister extends StatefulWidget {
   const ProfileRegister({Key? key}) : super(key: key);
 
@@ -11,6 +13,26 @@ class ProfileRegister extends StatefulWidget {
 }
 
 class _ProfileRegisterState extends State<ProfileRegister> {
+  final login = TextEditingController();
+  final password = TextEditingController();
+  final rePassword = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  final usernameValidator = MultiValidator([
+    RequiredValidator(errorText: 'Nazwa użytkownika jest wymagana'),
+    MinLengthValidator(5,
+        errorText: 'Nazwa użytkownika musi mieć przynajmniej 5 znaków'),
+  ]);
+
+  final passwordValidator = MultiValidator([
+    RequiredValidator(errorText: 'Hasło jest wymagane'),
+    MinLengthValidator(8, errorText: 'Hasło musi miec przynajmniej 8 znaków'),
+    PatternValidator(
+        r'^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:]).{8,}$',
+        errorText: 'Hasło musi posiadać przynajmniej jeden znak specjalny'),
+  ]);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,6 +65,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -64,6 +87,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                               child: FractionallySizedBox(
                                 widthFactor: 0.9,
                                 child: TextFormField(
+                                  controller: login,
                                   style: TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(10.0),
@@ -94,6 +118,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     hintText: "Nazwa użytkownika",
                                     hintStyle: TextStyle(color: Colors.white70),
                                   ),
+                                  validator: usernameValidator,
                                 ),
                               ),
                             ),
@@ -107,6 +132,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                               child: FractionallySizedBox(
                                 widthFactor: 0.9,
                                 child: TextFormField(
+                                  controller: password,
                                   style: TextStyle(color: Colors.white),
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -138,6 +164,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     hintText: "Hasło",
                                     hintStyle: TextStyle(color: Colors.white70),
                                   ),
+                                  validator: passwordValidator,
                                 ),
                               ),
                             ),
@@ -182,6 +209,10 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     hintText: "Powtórz hasło",
                                     hintStyle: TextStyle(color: Colors.white70),
                                   ),
+                                  validator: (val) => MatchValidator(
+                                          errorText: 'Hasła nie są takie same')
+                                      .validateMatch(
+                                          val.toString(), password.text),
                                 ),
                               ),
                             ),
@@ -193,7 +224,15 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: ElevatedButton(
                               onPressed: () => {
-                                AddUser("Johny", "Spalony").addUser(),
+                                if (_formKey.currentState!.validate())
+                                  {
+                                    AddUser(login.text, password.text)
+                                        .addUser(),
+                                    login.clear(),
+                                    password.clear(),
+                                    rePassword.clear(),
+                                    _formKey.currentState!.reset(),
+                                  }
                               },
                               child: Text(
                                 "Załóż konto",
