@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import './home_screen.dart';
 import './movies_screen.dart';
 import './categories_screen.dart';
-import './profile_login_screen.dart';
+import './profile_account.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,7 +24,7 @@ class _NavScreenState extends State<NavScreen> {
     const HomeScreen(),
     const MoviesScreen(),
     const CategoriesScreen(),
-    const ProfileLogin()
+    const ProfileAccount(),
   ];
 
   @override

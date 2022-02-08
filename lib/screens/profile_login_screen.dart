@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import './profile_remind_password_screen.dart';
 import './profile_register_screen.dart';
 import './profile_account.dart';
@@ -14,6 +16,11 @@ class ProfileLogin extends StatefulWidget {
 }
 
 class _ProfileLoginState extends State<ProfileLogin> {
+  final login = TextEditingController();
+  final password = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -46,6 +53,7 @@ class _ProfileLoginState extends State<ProfileLogin> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -67,6 +75,7 @@ class _ProfileLoginState extends State<ProfileLogin> {
                               child: FractionallySizedBox(
                                 widthFactor: 0.9,
                                 child: TextFormField(
+                                  controller: login,
                                   style: TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(10.0),
@@ -108,6 +117,7 @@ class _ProfileLoginState extends State<ProfileLogin> {
                             child: FractionallySizedBox(
                               widthFactor: 0.9,
                               child: TextFormField(
+                                controller: password,
                                 obscureText: true,
                                 style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
@@ -180,13 +190,7 @@ class _ProfileLoginState extends State<ProfileLogin> {
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: ElevatedButton(
                               onPressed: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ProfileAccount(),
-                                  ),
-                                )
+                                loginUser(login.text, password.text),
                               },
                               child: Text(
                                 "Zaloguj się",
@@ -253,5 +257,18 @@ class _ProfileLoginState extends State<ProfileLogin> {
         ),
       ),
     );
+  }
+}
+
+void loginUser(String email, String password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
+    }
   }
 }
