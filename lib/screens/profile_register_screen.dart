@@ -149,6 +149,53 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                       child: FractionallySizedBox(
                                         widthFactor: 0.9,
                                         child: TextFormField(
+                                          controller: username,
+                                          style: TextStyle(color: Colors.white),
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.all(10.0),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(200.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(200.0),
+                                              borderSide: BorderSide(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(200.0),
+                                              borderSide: BorderSide(
+                                                width: 0,
+                                              ),
+                                            ),
+                                            filled: true,
+                                            fillColor: BartekColorPalette
+                                                .bartekGrey[100],
+                                            hintText: "Nazwa użytkownika",
+                                            hintStyle: TextStyle(
+                                                color: Colors.white70),
+                                          ),
+                                          validator: usernameValidator,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: SizedBox(
+                                      height: 40,
+                                      child: FractionallySizedBox(
+                                        widthFactor: 0.9,
+                                        child: TextFormField(
                                           controller: password,
                                           style: TextStyle(color: Colors.white),
                                           obscureText: true,
@@ -246,17 +293,26 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10),
                                     child: ElevatedButton(
-                                      onPressed: () => {
-                                        if (_formKey.currentState!.validate())
-                                          {
-                                            registerUser(
-                                                email.text, password.text),
-                                            email.clear(),
-                                            username.clear(),
-                                            password.clear(),
-                                            rePassword.clear(),
-                                            _formKey.currentState!.reset(),
-                                          }
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          var usernameTxt = username.text;
+                                          registerUser(
+                                              email.text, password.text);
+                                          FirebaseAuth.instance
+                                              .authStateChanges()
+                                              .listen((User? user) {
+                                            if (user != null) {
+                                              var userId = user.uid.toString();
+                                              AddUser(userId, usernameTxt)
+                                                  .addUser();
+                                            }
+                                          });
+                                          email.clear();
+                                          username.clear();
+                                          password.clear();
+                                          rePassword.clear();
+                                          _formKey.currentState!.reset();
+                                        }
                                       },
                                       child: Text(
                                         "Załóż konto",

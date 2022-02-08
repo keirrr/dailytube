@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../bartek_color_palette.dart';
 import './profile_login_screen.dart';
@@ -13,8 +15,6 @@ class ProfileAccount extends StatefulWidget {
 }
 
 class _ProfileAccountState extends State<ProfileAccount> {
-  var currentUser = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) => StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -54,20 +54,9 @@ class _ProfileAccountState extends State<ProfileAccount> {
                                 ),
                               ),
                               Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: (currentUser != null)
-                                      ? Text(
-                                          currentUser!.uid,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
-                                        )
-                                      : Text(
-                                          "User not logged in",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
-                                        )),
+                                padding: const EdgeInsets.only(top: 10),
+                                child: GetUserName(),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 30),
                                 child: Text(
@@ -116,4 +105,37 @@ class _ProfileAccountState extends State<ProfileAccount> {
           }
         },
       );
+}
+
+class GetUserName extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    var username = "";
+
+    return FutureBuilder<QuerySnapshot>(
+      future: FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: currentUser!.uid.toString())
+          .get(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          final documents = snapshot.data!.docs;
+          for (var doc in documents) {
+            username = doc['username'];
+            return Text(
+              username,
+              style: Theme.of(context).textTheme.headline3,
+            );
+          }
+        }
+
+        return Text("");
+      },
+    );
+  }
 }
