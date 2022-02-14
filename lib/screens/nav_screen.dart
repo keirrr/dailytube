@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './home_screen.dart';
 import './movies_screen.dart';
+import 'upload_video_screen.dart';
 import './categories_screen.dart';
 import './profile_account.dart';
 
@@ -23,6 +24,7 @@ class _NavScreenState extends State<NavScreen> {
   final _screens = [
     const HomeScreen(),
     const MoviesScreen(),
+    const UploadVideo(),
     const CategoriesScreen(),
     const ProfileAccount(),
   ];
@@ -60,11 +62,15 @@ class _NavScreenState extends State<NavScreen> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Strona główna',
+              label: 'Główna',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.movie),
               label: 'Filmy',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.upload),
+              label: 'Prześlij',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.space_dashboard),
