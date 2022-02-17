@@ -245,11 +245,22 @@ class _UploadVideoState extends State<UploadVideo> {
                                             .uploadFile(filePath, fileName)
                                             .then((value) => print('Done'));
 
+                                        var random = new DateTime.now()
+                                            .millisecondsSinceEpoch;
+
+                                        var thumbName = "thumb_" +
+                                            random.toString() +
+                                            ".jpeg";
+
+                                        storage.genThumbnailFile(
+                                            filePath, thumbName);
+
                                         AddVideo(
                                                 title.text,
                                                 desc.text,
                                                 category,
                                                 'videos/$fileName',
+                                                'thumbnails/$thumbName',
                                                 userId,
                                                 DateTime.now())
                                             .addVideo();

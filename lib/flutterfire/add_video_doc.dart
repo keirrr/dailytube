@@ -9,11 +9,12 @@ class AddVideo {
   final String desc;
   final String category;
   final String videoPath;
+  final String thumbPath;
   final String author;
   final DateTime timestamp;
 
-  AddVideo(this.title, this.desc, this.category, this.videoPath, this.author,
-      this.timestamp);
+  AddVideo(this.title, this.desc, this.category, this.videoPath, this.thumbPath,
+      this.author, this.timestamp);
   CollectionReference users = FirebaseFirestore.instance.collection('videos');
 
   Future<void> addVideo() {
@@ -23,6 +24,7 @@ class AddVideo {
           'desc': desc,
           'category': category,
           'video_path': videoPath,
+          'thumb_path': thumbPath,
           'author': author,
           'timestamp': timestamp,
         })
