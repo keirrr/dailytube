@@ -241,6 +241,9 @@ class _UploadVideoState extends State<UploadVideo> {
                                         var userId =
                                             currentUser!.uid.toString();
 
+                                        var id = new DateTime.now()
+                                            .millisecondsSinceEpoch;
+
                                         storage
                                             .uploadFile(filePath, fileName)
                                             .then((value) => print('Done'));
@@ -256,6 +259,7 @@ class _UploadVideoState extends State<UploadVideo> {
                                             filePath, thumbName);
 
                                         AddVideo(
+                                                id.toString(),
                                                 title.text,
                                                 desc.text,
                                                 category,

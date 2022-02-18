@@ -111,31 +111,33 @@ class GetUserName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var currentUser = FirebaseAuth.instance.currentUser;
-    var username = "";
+    var username = currentUser!.displayName;
 
-    return FutureBuilder<QuerySnapshot>(
-      future: FirebaseFirestore.instance
-          .collection('users')
-          .where('uid', isEqualTo: currentUser!.uid.toString())
-          .get(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
+    return Text(username.toString());
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          final documents = snapshot.data!.docs;
-          for (var doc in documents) {
-            username = doc['username'];
-            return Text(
-              username,
-              style: Theme.of(context).textTheme.headline3,
-            );
-          }
-        }
+    // return FutureBuilder<QuerySnapshot>(
+    //   future: FirebaseFirestore.instance
+    //       .collection('users')
+    //       .where('uid', isEqualTo: currentUser!.uid.toString())
+    //       .get(),
+    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return Text("Something went wrong");
+    //     }
 
-        return Text("");
-      },
-    );
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    //       final documents = snapshot.data!.docs;
+    //       for (var doc in documents) {
+    //         username = doc['username'];
+    //         return Text(
+    //           username,
+    //           style: Theme.of(context).textTheme.headline3,
+    //         );
+    //       }
+    //     }
+
+    //     return Text("");
+    //   },
+    // );
   }
 }

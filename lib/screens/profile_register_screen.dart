@@ -295,18 +295,18 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     child: ElevatedButton(
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
-                                          var usernameTxt = username.text;
-                                          registerUser(
+                                          print(username.text);
+                                          registerUser(username.text,
                                               email.text, password.text);
-                                          FirebaseAuth.instance
-                                              .authStateChanges()
-                                              .listen((User? user) {
-                                            if (user != null) {
-                                              var userId = user.uid.toString();
-                                              AddUser(userId, usernameTxt)
-                                                  .addUser();
-                                            }
-                                          });
+                                          // FirebaseAuth.instance
+                                          //     .authStateChanges()
+                                          //     .listen((User? user) {
+                                          //   if (user != null) {
+                                          //     var userId = user.uid.toString();
+                                          //     AddUser(userId, usernameTxt)
+                                          //         .addUser();
+                                          //   }
+                                          // });
                                           email.clear();
                                           username.clear();
                                           password.clear();
@@ -357,10 +357,18 @@ class _ProfileRegisterState extends State<ProfileRegister> {
       );
 }
 
-void registerUser(String email, String password) async {
+Future registerUser(String username, String email, String password) async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   try {
-    UserCredential userCredential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+    UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    User? user = result.user;
+    if (user != null) {
+      user.updateDisplayName(username);
+      await user.reload();
+      user = await auth.currentUser;
+    }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
       print('The password provided is too weak.');

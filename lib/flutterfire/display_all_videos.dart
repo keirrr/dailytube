@@ -6,12 +6,15 @@ import '../bartek_color_palette.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import './storage_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/home_video_thumb.dart';
 import '../screens/video_player_screen.dart';
 
 class DisplayAllVideos extends StatelessWidget {
   final Storage storage = new Storage();
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class DisplayAllVideos extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           var documents = snapshot.data!;
-          print(documents.docs[0].data());
+          print(user!.uid);
           return Column(
             children: [
               for (var i = 0; i < documents.docs.length; i += 2)
@@ -46,6 +49,7 @@ class DisplayAllVideos extends StatelessWidget {
                                   future: storage.downloadUrl(
                                       snapshot.data!.docs[i]['thumb_path']),
                                   builder: (context, snapshot) {
+                                    print(snapshot.data);
                                     if (snapshot.hasData) {
                                       return FractionallySizedBox(
                                         widthFactor: 1,
@@ -57,6 +61,9 @@ class DisplayAllVideos extends StatelessWidget {
                                                 builder: (context) => Video(
                                                     videoPath: documents.docs[i]
                                                             ['video_path']
+                                                        .toString(),
+                                                    videoId: documents.docs[i]
+                                                            ['id']
                                                         .toString()),
                                               ),
                                             )

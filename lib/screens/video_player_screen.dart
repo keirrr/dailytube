@@ -5,16 +5,23 @@ import '../bartek_color_palette.dart';
 import 'package:better_player/better_player.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../flutterfire/get_video.dart';
+import '../flutterfire/add_comment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Video extends StatefulWidget {
   final String? videoPath;
-  const Video({Key? key, this.videoPath}) : super(key: key);
+  final String? videoId;
+  const Video({Key? key, this.videoPath, this.videoId}) : super(key: key);
 
   @override
   _VideoState createState() => _VideoState();
 }
 
 class _VideoState extends State<Video> {
+  final comment = TextEditingController();
+
+  User? currentUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,31 +143,81 @@ class _VideoState extends State<Video> {
                     ),
                     child: Column(
                       children: [
-                        TextFormField(
-                          obscureText: true,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(10.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(200.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(200.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.secondary,
-                                width: 2.0,
+                        Form(
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: SizedBox(
+                                  height: 40,
+                                  child: TextFormField(
+                                    controller: comment,
+                                    style: TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(5.0),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(200.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(200.0),
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(200.0),
+                                        borderSide: BorderSide(
+                                          width: 0,
+                                        ),
+                                      ),
+                                      filled: true,
+                                      fillColor:
+                                          BartekColorPalette.bartekGrey[100],
+                                      hintText: "Napisz komentarz",
+                                      hintStyle:
+                                          TextStyle(color: Colors.white70),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(200.0),
-                              borderSide: BorderSide(
-                                width: 0,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      AddComment(
+                                              widget.videoId.toString(),
+                                              currentUser!.uid,
+                                              currentUser!.displayName,
+                                              comment.text)
+                                          .addComm();
+                                    },
+                                    child: const Icon(Icons.send, size: 24),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            filled: true,
-                            fillColor: BartekColorPalette.bartekGrey[100],
-                            hintText: "Napisz komentarz",
-                            hintStyle: TextStyle(color: Colors.white70),
+                            ],
                           ),
                         ),
                         Column(
