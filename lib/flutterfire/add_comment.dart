@@ -17,7 +17,7 @@ class AddComment {
 
   User? currentUser = FirebaseAuth.instance.currentUser;
 
-  var timestamp = new DateTime.now();
+  var createdAt = Timestamp.now();
 
   Future<void> addComm() {
     return comments.add({
@@ -25,7 +25,7 @@ class AddComment {
       'userId': userId,
       'username': currentUser!.displayName,
       'comment': comment,
-      'timestamp': timestamp
+      'createdAt': createdAt
     }).then((value) => print("Comment added"));
   }
 }

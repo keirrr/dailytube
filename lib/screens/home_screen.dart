@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
 import '../bartek_color_palette.dart';
 
-import '../flutterfire/display_all_videos.dart';
+import '../widgets/display_all_videos.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

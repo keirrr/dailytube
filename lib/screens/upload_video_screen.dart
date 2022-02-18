@@ -248,8 +248,7 @@ class _UploadVideoState extends State<UploadVideo> {
                                             .uploadFile(filePath, fileName)
                                             .then((value) => print('Done'));
 
-                                        var random = new DateTime.now()
-                                            .millisecondsSinceEpoch;
+                                        var random = new DateTime.now();
 
                                         var thumbName = "thumb_" +
                                             random.toString() +

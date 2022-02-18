@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
 
-import 'package:better_player/better_player.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:better_player/better_player.dart';
 import '../flutterfire/get_video.dart';
 import '../flutterfire/add_comment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/get_all_comments.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../widgets/comment_item.dart';
+import '../widgets/get_comments_count.dart';
 
 class Video extends StatefulWidget {
   final String? videoPath;
@@ -51,7 +56,7 @@ class _VideoState extends State<Video> {
               ),
               Column(
                 children: [
-                  GetVideo(videoPath: widget.videoPath),
+                  //GetVideo(videoPath: widget.videoPath),
                   Column(
                     children: [
                       Align(
@@ -129,10 +134,7 @@ class _VideoState extends State<Video> {
                 children: [
                   Align(
                     alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "Komentarze 5",
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+                    child: GetCommentsCount(),
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -220,26 +222,7 @@ class _VideoState extends State<Video> {
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.userCircle,
-                                  color: BartekColorPalette.bartekGrey[50],
-                                  size: 32,
-                                ),
-                                Column(
-                                  children: [
-                                    Text("username"),
-                                    Text("8 godzin temu"),
-                                    Text("Komentarz komentarz")
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        )
+                        GetAllComments(),
                       ],
                     ),
                   )

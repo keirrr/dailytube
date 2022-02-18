@@ -12,10 +12,10 @@ class AddVideo {
   final String videoPath;
   final String thumbPath;
   final String author;
-  final DateTime timestamp;
+  final DateTime createdAt;
 
-  AddVideo(this.id, this.title, this.desc, this.category, this.videoPath, this.thumbPath,
-      this.author, this.timestamp);
+  AddVideo(this.id, this.title, this.desc, this.category, this.videoPath,
+      this.thumbPath, this.author, this.createdAt);
   CollectionReference users = FirebaseFirestore.instance.collection('videos');
 
   Future<void> addVideo() {
@@ -28,7 +28,7 @@ class AddVideo {
           'video_path': videoPath,
           'thumb_path': thumbPath,
           'author': author,
-          'timestamp': timestamp,
+          'createdAt': createdAt,
         })
         .then((value) => print("Video Added"))
         .catchError((error) => print("Failed to add video: $error"));

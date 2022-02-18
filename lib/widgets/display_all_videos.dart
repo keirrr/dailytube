@@ -5,10 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import '../bartek_color_palette.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import './storage_service.dart';
+import '../flutterfire/storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../widgets/home_video_thumb.dart';
+import 'home_video_thumb.dart';
 import '../screens/video_player_screen.dart';
 
 class DisplayAllVideos extends StatelessWidget {
@@ -30,7 +30,6 @@ class DisplayAllVideos extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           var documents = snapshot.data!;
-          print(user!.uid);
           return Column(
             children: [
               for (var i = 0; i < documents.docs.length; i += 2)
