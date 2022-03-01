@@ -4,12 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../flutterfire/storage_service.dart';
 
 import '../bartek_color_palette.dart';
-import './profile_account.dart';
 import './profile_login_screen.dart';
-import '../flutterfire/add_video_doc.dart';
+import './uploading_video_process_screen.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
 
 class UploadVideo extends StatefulWidget {
@@ -46,6 +44,8 @@ class _UploadVideoState extends State<UploadVideo> {
 
   String fileName = "";
   String filePath = "";
+  double progress = 0;
+  bool isFilePicked = false;
 
   @override
   Widget build(BuildContext context) => StreamBuilder<User?>(
@@ -98,20 +98,80 @@ class _UploadVideoState extends State<UploadVideo> {
                                     ),
                                   ),
                                 ),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    FilePickerResult? result =
-                                        await FilePicker.platform.pickFiles();
+                                !isFilePicked
+                                    ? ElevatedButton(
+                                        onPressed: () async {
+                                          FilePickerResult? result =
+                                              await FilePicker.platform
+                                                  .pickFiles();
 
-                                    if (result != null) {
-                                      PlatformFile file = result.files.first;
+                                          if (result != null) {
+                                            PlatformFile file =
+                                                result.files.first;
 
-                                      filePath = file.path.toString();
-                                      fileName = file.name;
-                                    }
-                                  },
-                                  child: Text("Upload file"),
-                                ),
+                                            filePath = file.path.toString();
+                                            fileName = file.name;
+
+                                            setState(() {
+                                              isFilePicked = true;
+                                            });
+                                          }
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text("Wybierz plik"),
+                                      )
+                                    : Column(
+                                        children: [
+                                          Text("SZCZEGÓŁY PLIKU",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              const Text("Nazwa pliku: ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(fileName),
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 25),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      fileName = "";
+                                                      filePath = "";
+                                                      isFilePicked = false;
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.clear_rounded),
+                                                  iconSize: 36,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
@@ -234,66 +294,78 @@ class _UploadVideoState extends State<UploadVideo> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        var currentUser =
-                                            FirebaseAuth.instance.currentUser;
-                                        var userId =
-                                            currentUser!.uid.toString();
-
-                                        var id = new DateTime.now()
-                                            .millisecondsSinceEpoch;
-
-                                        storage
-                                            .uploadFile(filePath, fileName)
-                                            .then((value) => print('Done'));
-
-                                        var random = new DateTime.now();
-
-                                        var thumbName = "thumb_" +
-                                            random.toString() +
-                                            ".jpeg";
-
-                                        storage.genThumbnailFile(
-                                            filePath, thumbName);
-
-                                        AddVideo(
-                                                id.toString(),
-                                                title.text,
-                                                desc.text,
-                                                category,
-                                                'videos/$fileName',
-                                                'thumbnails/$thumbName',
-                                                userId,
-                                                DateTime.now())
-                                            .addVideo();
-                                      },
-                                      child: Text(
-                                        "Prześlij film",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline3,
-                                      ),
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
+                                    child: isFilePicked
+                                        ? ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UploadingVideoProcess(
+                                                    filePath: filePath,
+                                                    fileName: fileName,
+                                                    title: title.text,
+                                                    description: desc.text,
+                                                    category: category,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              "Prześlij film",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                              ),
+                                              padding: MaterialStateProperty
+                                                  .all<EdgeInsets>(
+                                                const EdgeInsets.fromLTRB(
+                                                    0, 10, 0, 10),
+                                              ),
+                                            ),
+                                          )
+                                        : ElevatedButton(
+                                            onPressed: null,
+                                            child: Text(
+                                              "Prześlij film",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      BartekColorPalette
+                                                          .orange[800]),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                              ),
+                                              padding: MaterialStateProperty
+                                                  .all<EdgeInsets>(
+                                                const EdgeInsets.fromLTRB(
+                                                    0, 10, 0, 10),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                        padding: MaterialStateProperty.all<
-                                            EdgeInsets>(
-                                          const EdgeInsets.fromLTRB(
-                                              0, 10, 0, 10),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ],

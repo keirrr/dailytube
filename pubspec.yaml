@@ -47,6 +47,7 @@ dependencies:
   file_picker: ^4.3.3
   better_player: ^0.0.81
   video_thumbnail: ^0.4.3
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

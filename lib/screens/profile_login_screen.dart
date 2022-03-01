@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import './profile_remind_password_screen.dart';
 import './profile_register_screen.dart';
-import './profile_account.dart';
 
 import '../bartek_color_palette.dart';
 

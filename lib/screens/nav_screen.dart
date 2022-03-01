@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 import './home_screen.dart';
 import './movies_screen.dart';
 import 'upload_video_screen.dart';

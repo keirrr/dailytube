@@ -82,10 +82,28 @@ class _VideoState extends State<Video> {
                           children: [
                             Column(
                               children: [
-                                Icon(
-                                  Icons.thumb_up,
-                                  color: BartekColorPalette.bartekGrey[50],
-                                  size: 32,
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // bool isPostLiked;
+                                    // Future<QuerySnapshot> docSnapshot =
+                                    //     FirebaseFirestore.instance
+                                    //         .collection('videos')
+                                    //         .where("videoId", isEqualTo: "2")
+                                    //         .get();
+                                    // QuerySnapshot doc = await docSnapshot;
+                                    // if (doc.docs[0]['likes']
+                                    //     .contains(currentUser!.uid)) {
+                                    //   isPostLiked = true;
+                                    // } else {
+                                    //   print(doc.docs[0].data());
+                                    //   isPostLiked = false;
+                                    // }
+                                  },
+                                  child: Icon(
+                                    Icons.thumb_up,
+                                    color: BartekColorPalette.bartekGrey[50],
+                                    size: 32,
+                                  ),
                                 ),
                                 Text("103")
                               ],
