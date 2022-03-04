@@ -18,6 +18,8 @@ class UploadingVideoProcess extends StatefulWidget {
   final String? title;
   final String? description;
   final String? category;
+  final GlobalKey<FormState>? formKey;
+  final Function? clearFormCallback;
 
   const UploadingVideoProcess({
     Key? key,
@@ -26,6 +28,8 @@ class UploadingVideoProcess extends StatefulWidget {
     this.title,
     this.description,
     this.category,
+    this.formKey,
+    this.clearFormCallback,
   }) : super(key: key);
 
   @override
@@ -43,59 +47,151 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
   }
 
   callback(value) {
-    print("callback");
     setState(() {
       isAddDocDone = value;
     });
+    if (isAddDocDone == true) Navigator.pop(context);
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Czy na pewno chcesz cofnąć?"),
+            content: Text(
+              "Anuluje to wysyłanie filmu",
+              style: TextStyle(color: Colors.white),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Nie",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Tak",
+                  style: TextStyle(color: BartekColorPalette.orange[900]),
+                ),
+              ),
+            ],
+            backgroundColor: BartekColorPalette.bartekGrey[50],
+          ),
+        )) ??
+        false;
   }
 
   @override
-  Widget build(BuildContext context) => StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return GestureDetector(
-              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              child: Scaffold(
-                extendBody: true,
-                backgroundColor: BartekColorPalette.bartekGrey[900],
-                body: Container(
-                  margin: const EdgeInsets.only(
-                      top: 40, right: 15, bottom: 55, left: 15),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: const [
-                            Align(
-                              alignment: Alignment.center,
-                              child: Image(
-                                height: 32,
-                                image: AssetImage(
-                                    'assets/images/bartekhub-logo.png'),
+  Widget build(BuildContext context) => WillPopScope(
+        onWillPop: _onWillPop,
+        child: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: Scaffold(
+                  extendBody: true,
+                  backgroundColor: BartekColorPalette.bartekGrey[900],
+                  body: Container(
+                    margin: const EdgeInsets.only(
+                        top: 40, right: 15, bottom: 55, left: 15),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: const [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Image(
+                                  height: 32,
+                                  image: AssetImage(
+                                      'assets/images/bartekhub-logo.png'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: SizedBox(
+                              width: 300,
+                              height: 100,
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    child: LinearProgressIndicator(
+                                      value: progress / 100,
+                                      color: BartekColorPalette.bartekGrey[100],
+                                      backgroundColor:
+                                          BartekColorPalette.bartekGrey[50],
+                                      minHeight: 100,
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5),
+                                            child: Text(
+                                              "Przesyłanie filmu",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                          Text(
+                                            progress.toString() +
+                                                "% • " +
+                                                "mniej niż minuta",
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 20),
+                                        child: LinearProgressIndicator(
+                                          value: progress / 100,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          backgroundColor:
+                                              BartekColorPalette.orange[800],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                      Center(
-                        child: LinearProgressIndicator(
-                          value: progress / 100,
-                        ),
-                      ),
-                      Text(isAddDocDone.toString()),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          } else {
-            return ProfileLogin();
-          }
-        },
+              );
+            } else {
+              return ProfileLogin();
+            }
+          },
+        ),
       );
 
   Future uploadVideo() async {
@@ -103,7 +199,7 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
 
     var currentUser = FirebaseAuth.instance.currentUser;
     var userId = currentUser!.uid.toString();
-    var id = new DateTime.now().millisecondsSinceEpoch;
+    var id = DateTime.now().millisecondsSinceEpoch.toString();
 
     String filePath = widget.filePath.toString();
     String fileName = widget.fileName.toString();
@@ -111,10 +207,15 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
     String desc = widget.description.toString();
     String category = widget.category.toString();
 
+    // Final File Name
+    var fileNameSplit = fileName.split('.');
+    String ext = fileNameSplit.last.toString();
+    String finalFileName = fileNameSplit[0] + id + "." + ext;
+
     File file = File(filePath);
 
     UploadTask task =
-        FirebaseStorage.instance.ref('videos/$fileName').putFile(file);
+        FirebaseStorage.instance.ref('videos/$finalFileName').putFile(file);
 
     task.snapshotEvents.listen((event) {
       setState(() {
@@ -125,11 +226,12 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
       });
 
       if (event.state == TaskState.success) {
-        Fluttertoast.showToast(msg: 'Film został przesłany');
+        FocusManager.instance.primaryFocus?.unfocus();
+        widget.formKey?.currentState?.reset();
 
-        var random = new DateTime.now();
+        widget.clearFormCallback!();
 
-        var thumbName = "thumb_" + random.toString() + ".jpeg";
+        var thumbName = "thumb_" + id + ".jpeg";
 
         storage.genThumbnailFile(filePath, thumbName);
 
@@ -138,12 +240,14 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
           title: title,
           desc: desc,
           category: category,
-          videoPath: 'videos/$fileName',
+          videoPath: 'videos/$finalFileName',
           thumbPath: 'thumbnails/$thumbName',
           author: userId,
           createdAt: DateTime.now(),
           callback: callback,
-        );
+        ).addVideo();
+
+        Fluttertoast.showToast(msg: 'Film został przesłany');
       }
     }, onError: (e) {
       if (e.code == 'permission-denied') {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../bartek_color_palette.dart';
-import '../flutterfire/add_user.dart';
 import './profile_account.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
@@ -295,18 +294,8 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                     child: ElevatedButton(
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
-                                          print(username.text);
                                           registerUser(username.text,
                                               email.text, password.text);
-                                          // FirebaseAuth.instance
-                                          //     .authStateChanges()
-                                          //     .listen((User? user) {
-                                          //   if (user != null) {
-                                          //     var userId = user.uid.toString();
-                                          //     AddUser(userId, usernameTxt)
-                                          //         .addUser();
-                                          //   }
-                                          // });
                                           email.clear();
                                           username.clear();
                                           password.clear();

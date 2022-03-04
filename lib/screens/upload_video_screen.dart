@@ -18,26 +18,22 @@ class UploadVideo extends StatefulWidget {
 }
 
 class _UploadVideoState extends State<UploadVideo> {
+  final _formKey = GlobalKey<FormState>();
+
   final title = TextEditingController();
   final desc = TextEditingController();
   String category = 'One';
 
-  final _formKey = GlobalKey<FormState>();
-
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  final usernameValidator = MultiValidator([
-    RequiredValidator(errorText: 'Nazwa użytkownika jest wymagana'),
-    MinLengthValidator(5,
-        errorText: 'Nazwa użytkownika musi mieć przynajmniej 5 znaków'),
+  final titleValidator = MultiValidator([
+    RequiredValidator(errorText: 'Tytuł jest wymagany'),
+    MinLengthValidator(5, errorText: 'Tytuł musi mieć przynajmniej 5 znaków'),
   ]);
 
-  final passwordValidator = MultiValidator([
+  final descValidator = MultiValidator([
     RequiredValidator(errorText: 'Hasło jest wymagane'),
-    MinLengthValidator(8, errorText: 'Hasło musi miec przynajmniej 8 znaków'),
-    PatternValidator(
-        r'^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:]).{8,}$',
-        errorText: 'Hasło musi posiadać przynajmniej jeden znak specjalny'),
+    MinLengthValidator(5, errorText: 'Tytuł musi mieć przynajmniej 5 znaków'),
   ]);
 
   final Storage storage = Storage();
@@ -46,6 +42,15 @@ class _UploadVideoState extends State<UploadVideo> {
   String filePath = "";
   double progress = 0;
   bool isFilePicked = false;
+
+  clearFormCallback() {
+    setState(() {
+      isFilePicked = false;
+      category = "One";
+      title.clear();
+      desc.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) => StreamBuilder<User?>(
@@ -213,7 +218,7 @@ class _UploadVideoState extends State<UploadVideo> {
                                             hintStyle: TextStyle(
                                                 color: Colors.white70),
                                           ),
-                                          validator: passwordValidator,
+                                          validator: titleValidator,
                                         ),
                                       ),
                                     ),
@@ -260,6 +265,7 @@ class _UploadVideoState extends State<UploadVideo> {
                                             hintStyle: TextStyle(
                                                 color: Colors.white70),
                                           ),
+                                          validator: descValidator,
                                         ),
                                       ),
                                     ),
@@ -297,19 +303,25 @@ class _UploadVideoState extends State<UploadVideo> {
                                     child: isFilePicked
                                         ? ElevatedButton(
                                             onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UploadingVideoProcess(
-                                                    filePath: filePath,
-                                                    fileName: fileName,
-                                                    title: title.text,
-                                                    description: desc.text,
-                                                    category: category,
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UploadingVideoProcess(
+                                                      filePath: filePath,
+                                                      fileName: fileName,
+                                                      title: title.text,
+                                                      description: desc.text,
+                                                      category: category,
+                                                      formKey: _formKey,
+                                                      clearFormCallback:
+                                                          clearFormCallback,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              }
                                             },
                                             child: Text(
                                               "Prześlij film",
