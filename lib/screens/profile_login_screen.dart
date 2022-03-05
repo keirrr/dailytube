@@ -69,57 +69,13 @@ class _ProfileLoginState extends State<ProfileLogin> {
                         Flexible(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 10),
-                            child: SizedBox(
-                              height: 40,
-                              child: FractionallySizedBox(
-                                widthFactor: 0.9,
-                                child: TextFormField(
-                                  controller: login,
-                                  style: TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(10.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(200.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(200.0),
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        width: 2.0,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(200.0),
-                                      borderSide: BorderSide(
-                                        width: 0,
-                                      ),
-                                    ),
-                                    filled: true,
-                                    fillColor:
-                                        BartekColorPalette.bartekGrey[100],
-                                    hintText: "Nazwa użytkownika lub e-mail",
-                                    hintStyle: TextStyle(color: Colors.white70),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          child: SizedBox(
-                            height: 40,
                             child: FractionallySizedBox(
                               widthFactor: 0.9,
                               child: TextFormField(
-                                controller: password,
-                                obscureText: true,
+                                controller: login,
                                 style: TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
+                                  isDense: true,
                                   contentPadding: EdgeInsets.all(10.0),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(200.0),
@@ -141,9 +97,44 @@ class _ProfileLoginState extends State<ProfileLogin> {
                                   ),
                                   filled: true,
                                   fillColor: BartekColorPalette.bartekGrey[100],
-                                  hintText: "Hasło",
+                                  hintText: "Nazwa użytkownika lub e-mail",
                                   hintStyle: TextStyle(color: Colors.white70),
                                 ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: FractionallySizedBox(
+                            widthFactor: 0.9,
+                            child: TextFormField(
+                              controller: password,
+                              obscureText: true,
+                              style: TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.all(10.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(200.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(200.0),
+                                  borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    width: 2.0,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(200.0),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: BartekColorPalette.bartekGrey[100],
+                                hintText: "Hasło",
+                                hintStyle: TextStyle(color: Colors.white70),
                               ),
                             ),
                           ),

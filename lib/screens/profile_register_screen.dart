@@ -94,48 +94,46 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          controller: email,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Adres e-mail",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        controller: email,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding:
+                                              EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: EmailValidator(
-                                              errorText:
-                                                  "Nieprawidłowy adres e-mail"),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Adres e-mail",
+                                          hintStyle: TextStyle(
+                                              color: Colors.white70),
                                         ),
+                                        validator: EmailValidator(
+                                            errorText:
+                                                "Nieprawidłowy adres e-mail"),
                                       ),
                                     ),
                                   ),
@@ -143,46 +141,44 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          controller: username,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Nazwa użytkownika",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        controller: username,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding:
+                                              EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: usernameValidator,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Nazwa użytkownika",
+                                          hintStyle: TextStyle(
+                                              color: Colors.white70),
                                         ),
+                                        validator: usernameValidator,
                                       ),
                                     ),
                                   ),
@@ -190,47 +186,45 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          controller: password,
-                                          style: TextStyle(color: Colors.white),
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Hasło",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        controller: password,
+                                        style: TextStyle(color: Colors.white),
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding:
+                                              EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: passwordValidator,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Hasło",
+                                          hintStyle: TextStyle(
+                                              color: Colors.white70),
                                         ),
+                                        validator: passwordValidator,
                                       ),
                                     ),
                                   ),
@@ -238,50 +232,48 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          style: TextStyle(color: Colors.white),
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Powtórz hasło",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        style: TextStyle(color: Colors.white),
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding:
+                                              EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: (val) => MatchValidator(
-                                                  errorText:
-                                                      'Hasła nie są takie same')
-                                              .validateMatch(val.toString(),
-                                                  password.text),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Powtórz hasło",
+                                          hintStyle: TextStyle(
+                                              color: Colors.white70),
                                         ),
+                                        validator: (val) => MatchValidator(
+                                                errorText:
+                                                    'Hasła nie są takie same')
+                                            .validateMatch(val.toString(),
+                                                password.text),
                                       ),
                                     ),
                                   ),

@@ -32,8 +32,8 @@ class _UploadVideoState extends State<UploadVideo> {
   ]);
 
   final descValidator = MultiValidator([
-    RequiredValidator(errorText: 'Hasło jest wymagane'),
-    MinLengthValidator(5, errorText: 'Tytuł musi mieć przynajmniej 5 znaków'),
+    RequiredValidator(errorText: 'Opis jest wymagany'),
+    MinLengthValidator(5, errorText: 'Opis musi mieć przynajmniej 5 znaków'),
   ]);
 
   final Storage storage = Storage();
@@ -180,46 +180,43 @@ class _UploadVideoState extends State<UploadVideo> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          controller: title,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Tytuł",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        controller: title,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: titleValidator,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Tytuł",
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
+                                        validator: titleValidator,
                                       ),
                                     ),
                                   ),
@@ -227,46 +224,43 @@ class _UploadVideoState extends State<UploadVideo> {
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: FractionallySizedBox(
-                                        widthFactor: 0.9,
-                                        child: TextFormField(
-                                          controller: desc,
-                                          style: TextStyle(color: Colors.white),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                EdgeInsets.all(10.0),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200.0),
-                                              borderSide: BorderSide(
-                                                width: 0,
-                                              ),
-                                            ),
-                                            filled: true,
-                                            fillColor: BartekColorPalette
-                                                .bartekGrey[100],
-                                            hintText: "Opis filmu",
-                                            hintStyle: TextStyle(
-                                                color: Colors.white70),
+                                    child: FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: TextFormField(
+                                        controller: desc,
+                                        style: TextStyle(color: Colors.white),
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          contentPadding: EdgeInsets.all(10.0),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
                                           ),
-                                          validator: descValidator,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(200.0),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: BartekColorPalette
+                                              .bartekGrey[100],
+                                          hintText: "Opis filmu",
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
+                                        validator: descValidator,
                                       ),
                                     ),
                                   ),
