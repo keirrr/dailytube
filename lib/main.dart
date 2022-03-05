@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // FlutterFire
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'screens/nav_screen.dart';
 import './bartek_color_palette.dart';
@@ -13,6 +14,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {

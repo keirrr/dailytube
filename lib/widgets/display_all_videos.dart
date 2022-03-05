@@ -22,7 +22,7 @@ class DisplayAllVideos extends StatelessWidget {
         FirebaseFirestore.instance.collection('videos');
 
     return FutureBuilder<QuerySnapshot>(
-      future: videos.orderBy('timestamp').get(),
+      future: videos.orderBy('createdAt').get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");
