@@ -38,29 +38,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxFkv45sexrPYXCCAdbTlVXuiRbu6dwk0',
-    appId: '1:1002402080581:web:f519493900588607f0c02c',
-    messagingSenderId: '1002402080581',
-    projectId: 'bartek-hub',
-    authDomain: 'bartek-hub.firebaseapp.com',
-    storageBucket: 'bartek-hub.appspot.com',
+    apiKey: 'AIzaSyCExwxnUYJYqr-KpsGebK41HGqZLN-U4FY',
+    appId: '1:312270422586:web:5c79a88ce3edecb6a8eb03',
+    messagingSenderId: '312270422586',
+    projectId: 'bartek-hub-55399',
+    authDomain: 'bartek-hub-55399.firebaseapp.com',
+    storageBucket: 'bartek-hub-55399.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBTwCP1deovuiDR08ht0l4jF05he3g1WJU',
-    appId: '1:1002402080581:android:264b1473fa4f7ebbf0c02c',
-    messagingSenderId: '1002402080581',
-    projectId: 'bartek-hub',
-    storageBucket: 'bartek-hub.appspot.com',
+    apiKey: 'AIzaSyBCUvjRGQDbrJ4y9WTrvVsW-bnVzrISKgQ',
+    appId: '1:312270422586:android:741e45ed730664f7a8eb03',
+    messagingSenderId: '312270422586',
+    projectId: 'bartek-hub-55399',
+    storageBucket: 'bartek-hub-55399.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCYNaD1hNB94VkTY7aSg3Eh9CTeFORy398',
-    appId: '1:1002402080581:ios:96c14f721821fd4ff0c02c',
-    messagingSenderId: '1002402080581',
-    projectId: 'bartek-hub',
-    storageBucket: 'bartek-hub.appspot.com',
-    iosClientId: '1002402080581-qumq4kbdpi15583724h9phs4cfjk62b7.apps.googleusercontent.com',
-    iosBundleId: 'io.flutter.flutter.app',
+    apiKey: 'AIzaSyBaJqHVK5U6g4D5RHbYJZXTxeZzM037jSA',
+    appId: '1:312270422586:ios:eeb5e9ef42ea0b89a8eb03',
+    messagingSenderId: '312270422586',
+    projectId: 'bartek-hub-55399',
+    storageBucket: 'bartek-hub-55399.appspot.com',
+    iosClientId: '312270422586-jin5ofuecsb1qc2jmocbpp8fga9ir4bf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.bartekhub',
   );
 }

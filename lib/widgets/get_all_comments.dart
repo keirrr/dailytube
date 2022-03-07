@@ -1,27 +1,32 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'comment_item.dart';
 
 class GetAllComments extends StatelessWidget {
-  const GetAllComments({Key? key}) : super(key: key);
+  final String? videoId;
+  const GetAllComments({
+    Key? key,
+    this.videoId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
       future: FirebaseFirestore.instance
           .collection('comments')
-          .where('videoId', isEqualTo: "2")
+          .where('videoId', isEqualTo: videoId)
           .orderBy('createdAt')
           .get(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Container(
+          return SizedBox(
+            height: 500,
             child: ListView.builder(
+              padding: EdgeInsets.only(top: 10),
               itemCount: snapshot.data!.docs.length,
+              physics: AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
-              shrinkWrap: true,
               reverse: true,
               itemBuilder: (context, index) {
                 print(snapshot.data!.docs[index].data());

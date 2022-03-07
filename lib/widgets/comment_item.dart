@@ -14,21 +14,50 @@ class CommentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          FontAwesomeIcons.userCircle,
-          color: BartekColorPalette.bartekGrey[50],
-          size: 32,
-        ),
-        Column(
-          children: [
-            Text(username.toString()),
-            Text(time.toString()),
-            Text(comment.toString()),
-          ],
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            FontAwesomeIcons.userCircle,
+            color: BartekColorPalette.bartekGrey[50],
+            size: 32,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        username.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(time.toString()),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Expanded(
+                      child: Text(
+                        comment.toString(),
+                        textAlign: TextAlign.justify,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

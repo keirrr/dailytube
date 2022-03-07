@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GetCommentsCount extends StatelessWidget {
-  const GetCommentsCount({Key? key}) : super(key: key);
+  final String? videoId;
+  const GetCommentsCount({Key? key, this.videoId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
       future: FirebaseFirestore.instance
           .collection('comments')
-          .where('videoId', isEqualTo: '2')
+          .where('videoId', isEqualTo: videoId)
           .get(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {

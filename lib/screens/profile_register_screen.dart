@@ -101,8 +101,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                         style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          contentPadding:
-                                              EdgeInsets.all(10.0),
+                                          contentPadding: EdgeInsets.all(10.0),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(200.0),
@@ -128,8 +127,8 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                           fillColor: BartekColorPalette
                                               .bartekGrey[100],
                                           hintText: "Adres e-mail",
-                                          hintStyle: TextStyle(
-                                              color: Colors.white70),
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
                                         validator: EmailValidator(
                                             errorText:
@@ -148,8 +147,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                         style: TextStyle(color: Colors.white),
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          contentPadding:
-                                              EdgeInsets.all(10.0),
+                                          contentPadding: EdgeInsets.all(10.0),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(200.0),
@@ -175,8 +173,8 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                           fillColor: BartekColorPalette
                                               .bartekGrey[100],
                                           hintText: "Nazwa użytkownika",
-                                          hintStyle: TextStyle(
-                                              color: Colors.white70),
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
                                         validator: usernameValidator,
                                       ),
@@ -194,8 +192,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          contentPadding:
-                                              EdgeInsets.all(10.0),
+                                          contentPadding: EdgeInsets.all(10.0),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(200.0),
@@ -221,8 +218,8 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                           fillColor: BartekColorPalette
                                               .bartekGrey[100],
                                           hintText: "Hasło",
-                                          hintStyle: TextStyle(
-                                              color: Colors.white70),
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
                                         validator: passwordValidator,
                                       ),
@@ -239,8 +236,7 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                         obscureText: true,
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          contentPadding:
-                                              EdgeInsets.all(10.0),
+                                          contentPadding: EdgeInsets.all(10.0),
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(200.0),
@@ -266,14 +262,14 @@ class _ProfileRegisterState extends State<ProfileRegister> {
                                           fillColor: BartekColorPalette
                                               .bartekGrey[100],
                                           hintText: "Powtórz hasło",
-                                          hintStyle: TextStyle(
-                                              color: Colors.white70),
+                                          hintStyle:
+                                              TextStyle(color: Colors.white70),
                                         ),
                                         validator: (val) => MatchValidator(
                                                 errorText:
                                                     'Hasła nie są takie same')
-                                            .validateMatch(val.toString(),
-                                                password.text),
+                                            .validateMatch(
+                                                val.toString(), password.text),
                                       ),
                                     ),
                                   ),
