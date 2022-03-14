@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,8 +6,10 @@ class AddComment {
   final String userId;
   final String comment;
   final String? username;
+  final String avatarPath;
 
-  AddComment(this.videoId, this.userId, this.username, this.comment);
+  AddComment(
+      this.videoId, this.userId, this.username, this.avatarPath, this.comment);
 
   CollectionReference comments =
       FirebaseFirestore.instance.collection('comments');
@@ -25,7 +24,8 @@ class AddComment {
       'userId': userId,
       'username': currentUser!.displayName,
       'comment': comment,
-      'createdAt': createdAt
+      'createdAt': createdAt,
+      'userAvatarPath': avatarPath
     }).then((value) => print("Comment added"));
   }
 }

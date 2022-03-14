@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../bartek_color_palette.dart';
 import './profile_account.dart';
+import '../flutterfire/add_user.dart';
 
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -345,6 +346,9 @@ Future registerUser(String username, String email, String password) async {
       user.updateDisplayName(username);
       await user.reload();
       user = await auth.currentUser;
+      var userId = user!.uid.toString();
+      print("Create user");
+      AddUser(userId, username).addUser();
     }
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {

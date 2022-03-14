@@ -58,12 +58,22 @@ class DisplayAllVideos extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Video(
-                                                    videoPath: documents.docs[i]
-                                                            ['video_path']
-                                                        .toString(),
-                                                    videoId: documents.docs[i]
-                                                            ['id']
-                                                        .toString()),
+                                                  videoPath: documents.docs[i]
+                                                          ['video_path']
+                                                      .toString(),
+                                                  videoId: documents.docs[i]
+                                                          ['id']
+                                                      .toString(),
+                                                  videoTitle: documents.docs[i]
+                                                          ['title']
+                                                      .toString(),
+                                                  videoDesc: documents.docs[i]
+                                                          ['desc']
+                                                      .toString(),
+                                                  videoCreatedAt: documents
+                                                      .docs[i]['createdAt']
+                                                      .toDate(),
+                                                ),
                                               ),
                                             )
                                           },

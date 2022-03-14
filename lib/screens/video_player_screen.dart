@@ -8,13 +8,24 @@ import '../flutterfire/add_comment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/get_all_comments.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/get_comments_count.dart';
 
 class Video extends StatefulWidget {
   final String? videoPath;
   final String? videoId;
-  const Video({Key? key, this.videoPath, this.videoId}) : super(key: key);
+  final String? videoTitle;
+  final String? videoDesc;
+  final DateTime? videoCreatedAt;
+  const Video({
+    Key? key,
+    this.videoPath,
+    this.videoId,
+    this.videoTitle,
+    this.videoDesc,
+    this.videoCreatedAt,
+  }) : super(key: key);
 
   @override
   _VideoState createState() => _VideoState();
@@ -30,6 +41,20 @@ class _VideoState extends State<Video> {
   final commentValidator = MultiValidator([
     RequiredValidator(errorText: 'Nie można wysłać pustego komentarza'),
   ]);
+
+  var months = [
+    "sty",
+    "lut",
+    "mar",
+    "kwi",
+    "maj",
+    "cze",
+    "lip",
+    "sie",
+    "paź",
+    "lis",
+    "gru",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +85,7 @@ class _VideoState extends State<Video> {
               ),
               Column(
                 children: [
-                  GetVideo(videoPath: widget.videoPath),
+                  //GetVideo(videoPath: widget.videoPath),
                   Padding(
                     padding: const EdgeInsets.all(5),
                     child: Column(
@@ -68,14 +93,18 @@ class _VideoState extends State<Video> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            "Title",
+                            widget.videoTitle!,
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            "Dodano 10.02.2022",
+                            widget.videoCreatedAt!.day.toString() +
+                                " " +
+                                months[widget.videoCreatedAt!.month - 1] +
+                                " " +
+                                widget.videoCreatedAt!.year.toString(),
                             style: TextStyle(fontSize: 14),
                           ),
                         ),
@@ -252,12 +281,29 @@ class _VideoState extends State<Video> {
                                           onPressed: () {
                                             if (_formKey.currentState!
                                                 .validate()) {
-                                              AddComment(
+                                              FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(currentUser!.uid)
+                                                  .get()
+                                                  .then((DocumentSnapshot
+                                                      documentSnapshot) {
+                                                if (documentSnapshot.exists) {
+                                                  String avatarPath = documentSnapshot
+                                                      .get('avatarPath')
+                                                      .toString();
+                                                  AddComment(
                                                       widget.videoId.toString(),
                                                       currentUser!.uid,
                                                       currentUser!.displayName,
+                                                      avatarPath,
                                                       comment.text)
                                                   .addComm();
+                                                } else {
+                                                  print(
+                                                      'Document does not exist on the database');
+                                                }
+                                              });
+                                              
                                             }
                                           },
                                           icon: Icon(

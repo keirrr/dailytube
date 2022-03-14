@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddUser {
@@ -12,9 +10,11 @@ class AddUser {
 
   Future<void> addUser() {
     return users
-        .add({
+        .doc(uid)
+        .set({
           'uid': uid,
           'username': username,
+          'avatarPath': 'avatars/default-avatar.jpg',
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
