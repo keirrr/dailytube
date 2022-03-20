@@ -73,6 +73,12 @@ class DisplayAllVideos extends StatelessWidget {
                                                   videoCreatedAt: documents
                                                       .docs[i]['createdAt']
                                                       .toDate(),
+                                                  author: documents.docs[i]
+                                                          ['author']
+                                                      .toString(),
+                                                  authorAvatarPath: documents.docs[i]
+                                                          ['authorAvatarPath']
+                                                      .toString(),
                                                 ),
                                               ),
                                             )

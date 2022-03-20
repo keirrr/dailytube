@@ -10,6 +10,7 @@ class AddVideo {
   final String? videoPath;
   final String? thumbPath;
   final String? author;
+  final String? authorAvatarPath;
   final DateTime? createdAt;
   Function? callback;
 
@@ -22,6 +23,7 @@ class AddVideo {
     this.videoPath,
     this.thumbPath,
     this.author,
+    this.authorAvatarPath,
     this.createdAt,
     this.callback,
   });
@@ -37,6 +39,7 @@ class AddVideo {
       'video_path': videoPath,
       'thumb_path': thumbPath,
       'author': author,
+      'authorAvatarPath': authorAvatarPath,
       'createdAt': createdAt,
     }).then((value) {
       callback!(true);

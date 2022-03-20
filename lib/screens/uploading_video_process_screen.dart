@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bartek_hub/flutterfire/add_video_doc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -217,51 +218,69 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
     UploadTask task =
         FirebaseStorage.instance.ref('videos/$finalFileName').putFile(file);
 
-    task.snapshotEvents.listen((event) {
-      setState(() {
-        progress =
-            ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
+    // Get user avatar path
+    Future<String> getUserAvatarPath() async {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get()
+          .then((DocumentSnapshot snapshot) {
+        String avatarPath = snapshot.get('avatarPath').toString();
+        task.snapshotEvents.listen((event) {
+          setState(() {
+            progress = ((event.bytesTransferred.toDouble() /
+                        event.totalBytes.toDouble()) *
                     100)
                 .roundToDouble();
+          });
+
+          if (event.state == TaskState.success) {
+            FocusManager.instance.primaryFocus?.unfocus();
+            widget.formKey?.currentState?.reset();
+
+            widget.clearFormCallback!();
+
+            var thumbName = "thumb_" + id + ".jpeg";
+
+            storage.genThumbnailFile(filePath, thumbName);
+
+            String username = snapshot.get('username').toString();
+
+            AddVideo(
+              id: id.toString(),
+              title: title,
+              desc: desc,
+              category: category,
+              videoPath: 'videos/$finalFileName',
+              thumbPath: 'thumbnails/$thumbName',
+              author: username,
+              authorAvatarPath: avatarPath,
+              createdAt: DateTime.now(),
+              callback: callback,
+            ).addVideo();
+
+            Fluttertoast.showToast(msg: 'Film został przesłany');
+          }
+        }, onError: (e) {
+          if (e.code == 'permission-denied') {
+            print('User does not have permission to upload to this reference.');
+          }
+        });
+
+        try {
+          task;
+          print('Upload complete.');
+        } on FirebaseException catch (e) {
+          if (e.code == 'permission-denied') {
+            print('User does not have permission to upload to this reference.');
+          }
+        }
+        return snapshot.get('avatarPath').toString();
       });
 
-      if (event.state == TaskState.success) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        widget.formKey?.currentState?.reset();
-
-        widget.clearFormCallback!();
-
-        var thumbName = "thumb_" + id + ".jpeg";
-
-        storage.genThumbnailFile(filePath, thumbName);
-
-        AddVideo(
-          id: id.toString(),
-          title: title,
-          desc: desc,
-          category: category,
-          videoPath: 'videos/$finalFileName',
-          thumbPath: 'thumbnails/$thumbName',
-          author: userId,
-          createdAt: DateTime.now(),
-          callback: callback,
-        ).addVideo();
-
-        Fluttertoast.showToast(msg: 'Film został przesłany');
-      }
-    }, onError: (e) {
-      if (e.code == 'permission-denied') {
-        print('User does not have permission to upload to this reference.');
-      }
-    });
-
-    try {
-      await task;
-      print('Upload complete.');
-    } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('User does not have permission to upload to this reference.');
-      }
+      return "";
     }
+
+    getUserAvatarPath();
   }
 }
