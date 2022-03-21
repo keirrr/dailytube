@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
@@ -21,6 +23,8 @@ class Video extends StatefulWidget {
   final DateTime? videoCreatedAt;
   final String? author;
   final String? authorAvatarPath;
+  final int? likes;
+  final int? dislikes;
 
   const Video({
     Key? key,
@@ -31,6 +35,8 @@ class Video extends StatefulWidget {
     this.videoCreatedAt,
     this.author,
     this.authorAvatarPath,
+    this.likes,
+    this.dislikes,
   }) : super(key: key);
 
   @override
@@ -61,6 +67,19 @@ class _VideoState extends State<Video> {
     "lis",
     "gru",
   ];
+
+  bool isLiked = false;
+  int videoLikes = -1;
+  int videoDislikes = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      videoLikes = int.parse(widget.likes.toString());
+      videoDislikes = int.parse(widget.dislikes.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,29 +127,77 @@ class _VideoState extends State<Video> {
                         Column(
                           children: [
                             IconButton(
-                              onPressed: () async {
-                                // bool isPostLiked;
-                                // Future<QuerySnapshot> docSnapshot =
-                                //     FirebaseFirestore.instance
-                                //         .collection('videos')
-                                //         .where("videoId", isEqualTo: "2")
-                                //         .get();
-                                // QuerySnapshot doc = await docSnapshot;
-                                // if (doc.docs[0]['likes']
-                                //     .contains(currentUser!.uid)) {
-                                //   isPostLiked = true;
-                                // } else {
-                                //   print(doc.docs[0].data());
-                                //   isPostLiked = false;
-                                // }
-                              },
-                              splashRadius: 25,
-                              icon: const Icon(Icons.thumb_up,
-                                  color: Color.fromARGB(255, 122, 128, 132),
-                                  size: 32),
-                            ),
+                                onPressed: () async {
+                                  CollectionReference likedPosts =
+                                      FirebaseFirestore.instance
+                                          .collection('liked-posts');
+
+                                  likedPosts
+                                      .doc(currentUser!.uid)
+                                      .get()
+                                      .then((userLikedPosts) {
+                                    if (userLikedPosts.exists) {
+                                      List likedPostsList =
+                                          userLikedPosts.get('likedPostsList');
+
+                                      if (likedPostsList
+                                          .contains(widget.videoId)) {
+                                        likedPostsList.remove(widget.videoId);
+
+                                        likedPosts
+                                            .doc(currentUser!.uid)
+                                            .update({
+                                          'likedPostsList': likedPostsList
+                                        }).then((value) =>
+                                                print("Like updated"));
+
+                                        setState(() {
+                                          isLiked = false;
+                                          videoLikes--;
+                                        });
+                                      } else {
+                                        likedPostsList.add(widget.videoId);
+
+                                        likedPosts
+                                            .doc(currentUser!.uid)
+                                            .update({
+                                          'likedPostsList': likedPostsList
+                                        }).then((value) =>
+                                                print("Like updated"));
+
+                                        setState(() {
+                                          isLiked = true;
+                                          videoLikes++;
+                                        });
+                                      }
+                                    } else {
+                                      List<String> likedPostsList = [];
+                                      likedPostsList
+                                          .add(widget.videoId.toString());
+
+                                      likedPosts.doc(currentUser!.uid).set({
+                                        'likedPostsList': likedPostsList
+                                      }).then((value) => print("Like added"));
+
+                                      setState(() {
+                                        isLiked = true;
+                                        videoLikes++;
+                                      });
+                                    }
+                                  });
+                                },
+                                splashRadius: 25,
+                                icon: isLiked
+                                    ? const Icon(Icons.thumb_up,
+                                        color:
+                                            Color.fromARGB(255, 197, 200, 212),
+                                        size: 32)
+                                    : const Icon(Icons.thumb_up,
+                                        color:
+                                            Color.fromARGB(255, 122, 128, 132),
+                                        size: 32)),
                             Text(
-                              "103",
+                              videoLikes.toString(),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -160,7 +227,7 @@ class _VideoState extends State<Video> {
                                   size: 32),
                             ),
                             Text(
-                              "103",
+                              videoDislikes.toString(),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],

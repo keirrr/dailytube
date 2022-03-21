@@ -40,6 +40,8 @@ class AddVideo {
       'thumb_path': thumbPath,
       'author': author,
       'authorAvatarPath': authorAvatarPath,
+      'likes': 0,
+      'dislikes': 0,
       'createdAt': createdAt,
     }).then((value) {
       callback!(true);

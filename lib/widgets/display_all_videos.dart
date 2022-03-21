@@ -76,9 +76,14 @@ class DisplayAllVideos extends StatelessWidget {
                                                   author: documents.docs[i]
                                                           ['author']
                                                       .toString(),
-                                                  authorAvatarPath: documents.docs[i]
+                                                  authorAvatarPath: documents
+                                                      .docs[i]
                                                           ['authorAvatarPath']
                                                       .toString(),
+                                                  likes: documents.docs[i]
+                                                      ['likes'],
+                                                  dislikes: documents.docs[i]
+                                                      ['dislikes'],
                                                 ),
                                               ),
                                             )
