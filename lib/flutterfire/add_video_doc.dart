@@ -28,11 +28,10 @@ class AddVideo {
     this.callback,
   });
 
-  CollectionReference users = FirebaseFirestore.instance.collection('videos');
+  CollectionReference videos = FirebaseFirestore.instance.collection('videos');
 
   Future<void> addVideo() async {
-    return await users.add({
-      'id': id,
+    return await videos.add({
       'title': title,
       'desc': desc,
       'category': category,
@@ -44,6 +43,7 @@ class AddVideo {
       'dislikes': 0,
       'createdAt': createdAt,
     }).then((value) {
+      videos.doc(value.id).update({'id': value.id});
       callback!(true);
     }).catchError((error) => print("Failed to add video: $error"));
   }

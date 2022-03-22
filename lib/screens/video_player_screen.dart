@@ -68,7 +68,7 @@ class _VideoState extends State<Video> {
     "gru",
   ];
 
-  bool isLiked = false;
+  var isLiked;
   int videoLikes = -1;
   int videoDislikes = -1;
 
@@ -78,11 +78,27 @@ class _VideoState extends State<Video> {
     setState(() {
       videoLikes = int.parse(widget.likes.toString());
       videoDislikes = int.parse(widget.dislikes.toString());
+      isLiked = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // FirebaseFirestore.instance
+    //     .collection('liked-posts')
+    //     .doc(currentUser!.uid)
+    //     .get()
+    //     .then((value) {
+    //   List likedPosts = value.get('likedPostsList');
+    //   setState(() {
+    //     if (likedPosts.contains(widget.videoId)) {
+    //       isLiked = true;
+    //     } else {
+    //       isLiked = false;
+    //     }
+    //   });
+    // });
+
     return Scaffold(
       extendBody: true,
       backgroundColor: BartekColorPalette.bartekGrey[900],
@@ -124,84 +140,111 @@ class _VideoState extends State<Video> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          children: [
-                            IconButton(
-                                onPressed: () async {
-                                  CollectionReference likedPosts =
-                                      FirebaseFirestore.instance
-                                          .collection('liked-posts');
+                        Column(children: [
+                          IconButton(
+                              onPressed: () async {
+                                CollectionReference likedPosts =
+                                    FirebaseFirestore.instance
+                                        .collection('liked-posts');
 
-                                  likedPosts
-                                      .doc(currentUser!.uid)
-                                      .get()
-                                      .then((userLikedPosts) {
-                                    if (userLikedPosts.exists) {
-                                      List likedPostsList =
-                                          userLikedPosts.get('likedPostsList');
+                                CollectionReference videos = FirebaseFirestore
+                                    .instance
+                                    .collection('videos');
 
-                                      if (likedPostsList
-                                          .contains(widget.videoId)) {
-                                        likedPostsList.remove(widget.videoId);
+                                likedPosts
+                                    .doc(currentUser!.uid)
+                                    .get()
+                                    .then((userLikedPosts) {
+                                  if (userLikedPosts.exists) {
+                                    List likedPostsList =
+                                        userLikedPosts.get('likedPostsList');
 
-                                        likedPosts
-                                            .doc(currentUser!.uid)
-                                            .update({
-                                          'likedPostsList': likedPostsList
-                                        }).then((value) =>
-                                                print("Like updated"));
+                                    if (likedPostsList
+                                        .contains(widget.videoId)) {
+                                      likedPostsList.remove(widget.videoId);
 
-                                        setState(() {
-                                          isLiked = false;
-                                          videoLikes--;
-                                        });
-                                      } else {
-                                        likedPostsList.add(widget.videoId);
-
-                                        likedPosts
-                                            .doc(currentUser!.uid)
-                                            .update({
-                                          'likedPostsList': likedPostsList
-                                        }).then((value) =>
-                                                print("Like updated"));
-
-                                        setState(() {
-                                          isLiked = true;
-                                          videoLikes++;
-                                        });
-                                      }
-                                    } else {
-                                      List<String> likedPostsList = [];
-                                      likedPostsList
-                                          .add(widget.videoId.toString());
-
-                                      likedPosts.doc(currentUser!.uid).set({
+                                      likedPosts.doc(currentUser!.uid).update({
                                         'likedPostsList': likedPostsList
-                                      }).then((value) => print("Like added"));
+                                      }).then((value) => print("Like updated"));
+
+                                      videos
+                                          .doc(widget.videoId)
+                                          .get()
+                                          .then((value) {
+                                        int likes = value.get('likes');
+                                        likes--;
+                                        videos
+                                            .doc(widget.videoId)
+                                            .update({'likes': likes});
+                                      });
+
+                                      setState(() {
+                                        isLiked = false;
+                                        videoLikes--;
+                                      });
+                                    } else {
+                                      likedPostsList.add(widget.videoId);
+
+                                      likedPosts.doc(currentUser!.uid).update({
+                                        'likedPostsList': likedPostsList
+                                      }).then((value) => print("Like updated"));
+
+                                      videos
+                                          .doc(widget.videoId)
+                                          .get()
+                                          .then((value) {
+                                        int likes = value.get('likes');
+                                        likes++;
+                                        videos
+                                            .doc(widget.videoId)
+                                            .update({'likes': likes});
+                                      });
 
                                       setState(() {
                                         isLiked = true;
                                         videoLikes++;
                                       });
                                     }
-                                  });
-                                },
-                                splashRadius: 25,
-                                icon: isLiked
-                                    ? const Icon(Icons.thumb_up,
-                                        color:
-                                            Color.fromARGB(255, 197, 200, 212),
-                                        size: 32)
-                                    : const Icon(Icons.thumb_up,
-                                        color:
-                                            Color.fromARGB(255, 122, 128, 132),
-                                        size: 32)),
-                            Text(
-                              videoLikes.toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                                  } else {
+                                    List<String> likedPostsList = [];
+                                    likedPostsList
+                                        .add(widget.videoId.toString());
+
+                                    likedPosts.doc(currentUser!.uid).set({
+                                      'likedPostsList': likedPostsList
+                                    }).then((value) => print("Like added"));
+
+                                    videos
+                                        .doc(widget.videoId)
+                                        .get()
+                                        .then((value) {
+                                      int likes = value.get('likes');
+                                      likes++;
+                                      videos
+                                          .doc(widget.videoId)
+                                          .update({'likes': likes});
+                                    });
+
+                                    setState(() {
+                                      isLiked = true;
+                                      videoLikes++;
+                                    });
+                                  }
+                                });
+                              },
+                              splashRadius: 25,
+                              icon: isLiked
+                                  ? const Icon(Icons.thumb_up,
+                                      color: Color.fromARGB(255, 197, 200, 212),
+                                      size: 32)
+                                  : const Icon(Icons.thumb_up,
+                                      color: Color.fromARGB(255, 122, 128, 132),
+                                      size: 32)),
+                          Text(
+                            videoLikes.toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ]),
                         Column(
                           children: [
                             IconButton(
