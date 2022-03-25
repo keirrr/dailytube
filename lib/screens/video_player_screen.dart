@@ -12,8 +12,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../widgets/get_comments_count.dart';
-import '../widgets/like_button_info.dart';
-import '../widgets/dislike_button_info.dart';
 import '../widgets/video_likes_buttons_info.dart';
 
 class Video extends StatefulWidget {
