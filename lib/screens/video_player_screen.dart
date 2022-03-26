@@ -82,7 +82,7 @@ class _VideoState extends State<Video> {
           children: [
             Column(
               children: [
-                //GetVideo(videoPath: widget.videoPath),
+                GetVideo(videoPath: widget.videoPath),
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Column(
@@ -115,12 +115,6 @@ class _VideoState extends State<Video> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         VideoLikesButtonInfo(videoId: widget.videoId),
-                        // LikeButtonInfo(
-                        //   videoId: widget.videoId,
-                        // ),
-                        // DislikeButtonInfo(
-                        //   videoId: widget.videoId,
-                        // ),
                       ],
                     ),
                     Container(

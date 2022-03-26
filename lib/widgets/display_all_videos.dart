@@ -48,7 +48,6 @@ class DisplayAllVideos extends StatelessWidget {
                                   future: storage.downloadUrl(
                                       snapshot.data!.docs[i]['thumb_path']),
                                   builder: (context, snapshot) {
-                                    print(snapshot.data);
                                     if (snapshot.hasData) {
                                       return FractionallySizedBox(
                                         widthFactor: 1,
@@ -131,6 +130,59 @@ class DisplayAllVideos extends StatelessWidget {
                                             .headline6,
                                       ),
                                     ),
+                                    Row(
+                                      children: [
+                                        Text((() {
+                                          var time = documents.docs[i]
+                                                  ['createdAt']
+                                              .toDate();
+
+                                          var timeNow = new DateTime.now();
+                                          var difference =
+                                              timeNow.difference(time);
+
+                                          var timeDiffMinutes =
+                                              difference.inMinutes;
+                                          var timeDiffHours =
+                                              difference.inHours;
+                                          var timeDiffDays = difference.inDays;
+
+                                          var timeDiff;
+
+                                          if (timeDiffDays > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff =
+                                                  timeDiffDays.toString() +
+                                                      " dzień temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffDays.toString() +
+                                                      " dni temu";
+                                            }
+                                          } else if (timeDiffHours > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff = "Godzinę temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffHours.toString() +
+                                                      " godzin temu";
+                                            }
+                                          } else if (timeDiffMinutes > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff = "Minutę temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffMinutes.toString() +
+                                                      " minut temu";
+                                            }
+                                          } else if (timeDiffMinutes == 0) {
+                                            timeDiff = "Teraz";
+                                          }
+
+                                          return timeDiff;
+                                        }()))
+                                      ],
+                                    )
                                   ],
                                 ),
                               ],
@@ -193,6 +245,59 @@ class DisplayAllVideos extends StatelessWidget {
                                             .headline6,
                                       ),
                                     ),
+                                    Row(
+                                      children: [
+                                        Text((() {
+                                          var time = documents.docs[i + 1]
+                                                  ['createdAt']
+                                              .toDate();
+
+                                          var timeNow = new DateTime.now();
+                                          var difference =
+                                              timeNow.difference(time);
+
+                                          var timeDiffMinutes =
+                                              difference.inMinutes;
+                                          var timeDiffHours =
+                                              difference.inHours;
+                                          var timeDiffDays = difference.inDays;
+
+                                          var timeDiff;
+
+                                          if (timeDiffDays > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff =
+                                                  timeDiffDays.toString() +
+                                                      " dzień temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffDays.toString() +
+                                                      " dni temu";
+                                            }
+                                          } else if (timeDiffHours > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff = "Godzinę temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffHours.toString() +
+                                                      " godzin temu";
+                                            }
+                                          } else if (timeDiffMinutes > 0) {
+                                            if (timeDiffHours == 1) {
+                                              timeDiff = "Minutę temu";
+                                            } else {
+                                              timeDiff =
+                                                  timeDiffMinutes.toString() +
+                                                      " minut temu";
+                                            }
+                                          } else if (timeDiffMinutes == 0) {
+                                            timeDiff = "Teraz";
+                                          }
+
+                                          return timeDiff;
+                                        }()))
+                                      ],
+                                    )
                                   ],
                                 ),
                               ],
