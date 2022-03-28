@@ -4,6 +4,7 @@ import 'package:flag/flag.dart';
 import '../bartek_color_palette.dart';
 
 import '../widgets/display_all_videos.dart';
+import '../widgets/category_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +14,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _categoriesList = [
+    ["Muzyka"],
+    ["Na żywo"],
+    ["Gry"],
+    ["Wiadomości"],
+    ["Sport"]
+  ];
+
+  List a = List.filled(3, List.filled(3, 0));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,117 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: BartekColorPalette.bartekGrey[100],
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 10,
-                                  width: 100,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: BartekColorPalette.bartekGrey[100],
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 10,
-                                  width: 100,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: BartekColorPalette.bartekGrey[100],
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 10,
-                                  width: 100,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: BartekColorPalette.bartekGrey[100],
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 10,
-                                  width: 100,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          for (int i = 0; i < _categoriesList.length; i++)
+                            CategoryItem(title: _categoriesList[i][0])
                         ],
                       ),
                     )

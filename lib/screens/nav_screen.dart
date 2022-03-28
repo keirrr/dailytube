@@ -23,9 +23,9 @@ class _NavScreenState extends State<NavScreen> {
   int _selectedIndex = 0;
   final _screens = [
     const HomeScreen(),
-    const MoviesScreen(),
+    //const MoviesScreen(),
     const UploadVideo(),
-    const CategoriesScreen(),
+    //const CategoriesScreen(),
     const ProfileAccount(),
   ];
 
@@ -67,18 +67,18 @@ class _NavScreenState extends State<NavScreen> {
                       icon: Icon(Icons.home),
                       label: 'Główna',
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.movie),
-                      label: 'Filmy',
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(Icons.movie),
+                    //   label: 'Filmy',
+                    // ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.upload),
                       label: 'Prześlij',
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.space_dashboard),
-                      label: 'Kategorie',
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(Icons.space_dashboard),
+                    //   label: 'Kategorie',
+                    // ),
                     BottomNavigationBarItem(
                       icon: FaIcon(FontAwesomeIcons.solidUser),
                       label: 'Profil',

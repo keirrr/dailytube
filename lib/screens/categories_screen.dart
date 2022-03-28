@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
+import '../widgets/category_item.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -36,72 +37,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Flexible(
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 5),
-                            child: FractionallySizedBox(
-                              widthFactor: 1,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      color: BartekColorPalette.bartekGrey[100],
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 5),
-                            child: FractionallySizedBox(
-                              widthFactor: 1,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      color: BartekColorPalette.bartekGrey[100],
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
+                        CategoryItem(),
+                        CategoryItem(),
                       ],
                     ),
                   ),
