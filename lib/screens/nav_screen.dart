@@ -50,12 +50,12 @@ class _NavScreenState extends State<NavScreen> {
               ),
               extendBody: true,
               backgroundColor: BartekColorPalette.bartekGrey[900],
-              bottomNavigationBar: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0),
-                ),
+              bottomNavigationBar: SizedBox(
                 child: BottomNavigationBar(
+                  unselectedFontSize: 0,
+                  selectedFontSize: 0,
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
                   type: BottomNavigationBarType.fixed,
                   backgroundColor: BartekColorPalette.bartekGrey[400],
                   selectedItemColor: Theme.of(context).colorScheme.secondary,
@@ -64,15 +64,21 @@ class _NavScreenState extends State<NavScreen> {
                   onTap: (i) => setState(() => _selectedIndex = i),
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Główna',
+                      icon: Icon(
+                        Icons.home,
+                        size: 32,
+                      ),
+                      label: "Główna",
                     ),
                     // BottomNavigationBarItem(
                     //   icon: Icon(Icons.movie),
                     //   label: 'Filmy',
                     // ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.upload),
+                      icon: Icon(
+                        Icons.upload,
+                        size: 32,
+                      ),
                       label: 'Prześlij',
                     ),
                     // BottomNavigationBarItem(
@@ -80,7 +86,10 @@ class _NavScreenState extends State<NavScreen> {
                     //   label: 'Kategorie',
                     // ),
                     BottomNavigationBarItem(
-                      icon: FaIcon(FontAwesomeIcons.solidUser),
+                      icon: FaIcon(
+                        FontAwesomeIcons.solidUser,
+                        size: 24,
+                      ),
                       label: 'Profil',
                     )
                   ],

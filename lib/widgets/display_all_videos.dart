@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 
 // Import the firebase_core and cloud_firestore plugin
-import 'package:firebase_core/firebase_core.dart';
 import '../bartek_color_palette.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../flutterfire/storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'home_video_thumb.dart';
 import '../screens/video_player_screen.dart';
 
 class DisplayAllVideos extends StatelessWidget {
   final Storage storage = new Storage();
+  final User? user = FirebaseAuth.instance.currentUser;
 
-  User? user = FirebaseAuth.instance.currentUser;
+  final String? category;
+
+  DisplayAllVideos({Key? key, this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     CollectionReference videos =
         FirebaseFirestore.instance.collection('videos');
 
+    print(category);
+
     return FutureBuilder<QuerySnapshot>(
-      future: videos.orderBy('createdAt').get(),
+      future: category == null
+          ? videos.orderBy('createdAt').get()
+          : videos
+              .where('category', isEqualTo: category)
+              .orderBy('createdAt')
+              .get(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text("Something went wrong");

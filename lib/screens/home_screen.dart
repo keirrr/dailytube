@@ -15,11 +15,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _categoriesList = [
-    ["Muzyka"],
-    ["Na żywo"],
-    ["Gry"],
-    ["Wiadomości"],
-    ["Sport"]
+    ["Muzyka", "music", "categories_thumbnails/music.jpeg"],
+    ["Na żywo", "live", "categories_thumbnails/live.jpg"],
+    ["Gry", "games", "categories_thumbnails/games.jpg"],
+    ["Wiadomości", "news", "categories_thumbnails/news.jpg"],
+    ["Sport", "sport", "categories_thumbnails/sport.jpg"]
   ];
 
   List a = List.filled(3, List.filled(3, 0));
@@ -68,7 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Row(
                         children: [
                           for (int i = 0; i < _categoriesList.length; i++)
-                            CategoryItem(title: _categoriesList[i][0])
+                            i == 0
+                                ? CategoryItem(
+                                    title: _categoriesList[i][0],
+                                    category: _categoriesList[i][1],
+                                    thumbPath: _categoriesList[i][2],
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: CategoryItem(
+                                      title: _categoriesList[i][0],
+                                      category: _categoriesList[i][1],
+                                      thumbPath: _categoriesList[i][2],
+                                    ),
+                                  )
                         ],
                       ),
                     )
@@ -83,13 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "Most popular videos in Poland",
+                          "Na czasie 🔥",
                           style: Theme.of(context).textTheme.headline6,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 5),
-                          child: Flag.fromCode(FlagsCode.PL,
-                              height: 20, width: 20),
                         ),
                       ],
                     ),

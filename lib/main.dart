@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: NavScreen(),
+      home: const NavScreen(),
     );
   }
 }
