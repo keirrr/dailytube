@@ -13,8 +13,10 @@ class DisplayAllVideos extends StatelessWidget {
   final User? user = FirebaseAuth.instance.currentUser;
 
   final String? category;
+  final String? videoAuthorId;
 
-  DisplayAllVideos({Key? key, this.category}) : super(key: key);
+  DisplayAllVideos({Key? key, this.category, this.videoAuthorId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,12 @@ class DisplayAllVideos extends StatelessWidget {
 
     return FutureBuilder<QuerySnapshot>(
       future: category == null
-          ? videos.orderBy('createdAt').get()
+          ? videoAuthorId == null
+              ? videos.orderBy('createdAt').get()
+              : videos
+                  .where('authorId', isEqualTo: videoAuthorId)
+                  .orderBy('createdAt')
+                  .get()
           : videos
               .where('category', isEqualTo: category)
               .orderBy('createdAt')
