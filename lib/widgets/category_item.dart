@@ -2,7 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
-import 'package:bartek_hub/screens/categories_screen.dart';
+import 'package:dailytube/screens/categories_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryItem extends StatelessWidget {

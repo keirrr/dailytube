@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bartek_hub/flutterfire/add_video_doc.dart';
+import 'package:dailytube/flutterfire/add_video_doc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -114,9 +114,9 @@ class _UploadingVideoProcessState extends State<UploadingVideoProcess> {
                               Align(
                                 alignment: Alignment.center,
                                 child: Image(
-                                  height: 32,
+                                  height: 48,
                                   image: AssetImage(
-                                      'assets/images/bartekhub-logo.png'),
+                                      'assets/images/dailytube-logo.png'),
                                 ),
                               ),
                             ],

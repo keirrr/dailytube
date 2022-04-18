@@ -1,5 +1,6 @@
-import 'package:bartek_hub/screens/profile_settings_screen.dart';
-import 'package:bartek_hub/widgets/display_all_videos.dart';
+import 'package:dailytube/screens/profile_settings_screen.dart';
+import 'package:dailytube/widgets/display_all_videos.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,23 +69,52 @@ class _ProfileAccountState extends State<ProfileAccount> {
                             alignment: Alignment.center,
                             child: Column(
                               children: [
-                                SizedBox(
-                                  width: 128,
-                                  height: 128,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        width: 3,
-                                      ),
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Image.network(
-                                        'https://icon-library.com/images/avatar-icon-png/avatar-icon-png-8.jpg'),
-                                  ),
-                                ),
+                                StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('users')
+                                        .where('uid',
+                                            isEqualTo: currentUser!.uid)
+                                        .snapshots(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<QuerySnapshot>
+                                            userSnapshot) {
+                                      if (userSnapshot.hasData) {
+                                        final storageRef =
+                                            FirebaseStorage.instance.ref();
+                                        final avatarPath = userSnapshot
+                                            .data!.docs[0]
+                                            .get('avatarPath');
+
+                                        StreamBuilder(
+                                          stream: storageRef
+                                              .child(avatarPath)
+                                              .getDownloadURL()
+                                              .asStream(),
+                                          builder: (context, urlSnapshot) {
+                                            print('xd');
+                                            // return SizedBox(
+                                            //   width: 128,
+                                            //   height: 128,
+                                            //   child: Container(
+                                            //     decoration: BoxDecoration(
+                                            //       border: Border.all(
+                                            //         width: 3,
+                                            //       ),
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(
+                                            //               100),
+                                            //     ),
+                                            //     child: Image.network(
+                                            //         snapshot.data.toString()),
+                                            //   ),
+                                            // );
+                                            return Text('XD');
+                                          },
+                                        );
+                                      }
+
+                                      return Text('XD');
+                                    }),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: GetUserName(),
@@ -115,33 +145,6 @@ class _ProfileAccountState extends State<ProfileAccount> {
 
                                       return Text("description");
                                     })
-
-                                // Padding(
-                                //   padding: const EdgeInsets.only(top: 50),
-                                //   child: ElevatedButton(
-                                //     onPressed: () async {
-                                //       await FirebaseAuth.instance.signOut();
-                                //     },
-                                //     child: Text(
-                                //       "Wyloguj się",
-                                //       style:
-                                //           Theme.of(context).textTheme.headline3,
-                                //     ),
-                                //     style: ButtonStyle(
-                                //       backgroundColor: MaterialStateProperty.all(
-                                //           Theme.of(context)
-                                //               .colorScheme
-                                //               .secondary),
-                                //       shape: MaterialStateProperty.all<
-                                //           RoundedRectangleBorder>(
-                                //         RoundedRectangleBorder(
-                                //           borderRadius:
-                                //               BorderRadius.circular(18.0),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
@@ -249,30 +252,16 @@ class GetUserName extends StatelessWidget {
       username.toString(),
       style: Theme.of(context).textTheme.headline6,
     );
-
-    // return FutureBuilder<QuerySnapshot>(
-    //   future: FirebaseFirestore.instance
-    //       .collection('users')
-    //       .where('uid', isEqualTo: currentUser!.uid.toString())
-    //       .get(),
-    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    //     if (snapshot.hasError) {
-    //       return Text("Something went wrong");
-    //     }
-
-    //     if (snapshot.connectionState == ConnectionState.done) {
-    //       final documents = snapshot.data!.docs;
-    //       for (var doc in documents) {
-    //         username = doc['username'];
-    //         return Text(
-    //           username,
-    //           style: Theme.of(context).textTheme.headline3,
-    //         );
-    //       }
-    //     }
-
-    //     return Text("");
-    //   },
-    // );
   }
+}
+
+// pobierz uzytkownika > wez avatarpth > wez downloadurl > generuj widget
+
+getAvatarUrl(AsyncSnapshot<QuerySnapshot> snapshot) {
+  final storageRef = FirebaseStorage.instance.ref();
+  final avatarPath = snapshot.data!.docs[0].get('avatarPath');
+
+  storageRef.child(avatarPath).getDownloadURL().then((value) {
+    return value;
+  });
 }

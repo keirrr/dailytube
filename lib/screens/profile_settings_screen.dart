@@ -1,5 +1,5 @@
-import 'package:bartek_hub/bartek_color_palette.dart';
-import 'package:bartek_hub/flutterfire/update_user_desc.dart';
+import 'package:dailytube/bartek_color_palette.dart';
+import 'package:dailytube/flutterfire/update_user_desc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -197,6 +197,34 @@ class _ProfileSettingsScreenState extends State<ProfileSettingsScreen> {
                                           ],
                                         ),
                                       ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 50),
+                                      child: ElevatedButton(
+                                        onPressed: () async {
+                                          await FirebaseAuth.instance.signOut();
+                                        },
+                                        child: Text(
+                                          "Wyloguj się",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3,
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 );

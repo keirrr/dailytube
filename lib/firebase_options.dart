@@ -38,29 +38,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCExwxnUYJYqr-KpsGebK41HGqZLN-U4FY',
-    appId: '1:312270422586:web:5c79a88ce3edecb6a8eb03',
-    messagingSenderId: '312270422586',
-    projectId: 'bartek-hub-55399',
-    authDomain: 'bartek-hub-55399.firebaseapp.com',
-    storageBucket: 'bartek-hub-55399.appspot.com',
+    apiKey: 'AIzaSyAetzBtZ9KE0xAFlgaWF2_9U9EKeSTZ0Os',
+    appId: '1:926999703172:web:4ea5eb75da645328d89cd1',
+    messagingSenderId: '926999703172',
+    projectId: 'dailytube-74a00',
+    authDomain: 'dailytube-74a00.firebaseapp.com',
+    storageBucket: 'dailytube-74a00.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBCUvjRGQDbrJ4y9WTrvVsW-bnVzrISKgQ',
-    appId: '1:312270422586:android:741e45ed730664f7a8eb03',
-    messagingSenderId: '312270422586',
-    projectId: 'bartek-hub-55399',
-    storageBucket: 'bartek-hub-55399.appspot.com',
+    apiKey: 'AIzaSyA2IRYMqCfknsFtsZQK_isDgoMtH6glQhQ',
+    appId: '1:926999703172:android:8a46f430b314f313d89cd1',
+    messagingSenderId: '926999703172',
+    projectId: 'dailytube-74a00',
+    storageBucket: 'dailytube-74a00.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBaJqHVK5U6g4D5RHbYJZXTxeZzM037jSA',
-    appId: '1:312270422586:ios:eeb5e9ef42ea0b89a8eb03',
-    messagingSenderId: '312270422586',
-    projectId: 'bartek-hub-55399',
-    storageBucket: 'bartek-hub-55399.appspot.com',
-    iosClientId: '312270422586-jin5ofuecsb1qc2jmocbpp8fga9ir4bf.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bartekhub',
+    apiKey: 'AIzaSyC_3rv3N5l0BJ7xerzWaNta9JXrCkIC7KQ',
+    appId: '1:926999703172:ios:c63964c6bcb8bdbbd89cd1',
+    messagingSenderId: '926999703172',
+    projectId: 'dailytube-74a00',
+    storageBucket: 'dailytube-74a00.appspot.com',
+    iosClientId: '926999703172-7ohudkjg32np9brg5m6710mb1urjbfcf.apps.googleusercontent.com',
+    iosBundleId: 'com.example.dailytube',
   );
 }

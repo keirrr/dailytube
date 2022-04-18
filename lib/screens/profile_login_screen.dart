@@ -41,8 +41,8 @@ class _ProfileLoginState extends State<ProfileLogin> {
                     Align(
                       alignment: Alignment.center,
                       child: Image(
-                        height: 32,
-                        image: AssetImage('assets/images/bartekhub-logo.png'),
+                        height: 48,
+                        image: AssetImage('assets/images/dailytube-logo.png'),
                       ),
                     ),
                   ],
@@ -97,7 +97,7 @@ class _ProfileLoginState extends State<ProfileLogin> {
                                   ),
                                   filled: true,
                                   fillColor: BartekColorPalette.bartekGrey[100],
-                                  hintText: "Nazwa użytkownika lub e-mail",
+                                  hintText: "Adres email",
                                   hintStyle: TextStyle(color: Colors.white70),
                                 ),
                               ),
@@ -139,41 +139,6 @@ class _ProfileLoginState extends State<ProfileLogin> {
                             ),
                           ),
                         ),
-                        Flexible(
-                          child: FractionallySizedBox(
-                            widthFactor: 0.9,
-                            heightFactor: 0.3,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: SizedBox(
-                                height: 35,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ProfileRemindPassword(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    splashFactory: NoSplash.splashFactory,
-                                  ),
-                                  child: Text(
-                                    "Przypomnij hasło",
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
                           width: 250,
                           child: Padding(
@@ -204,6 +169,31 @@ class _ProfileLoginState extends State<ProfileLogin> {
                         ),
                         Column(
                           children: [
+                            SizedBox(
+                              height: 35,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfileRemindPassword(),
+                                    ),
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                  splashFactory: NoSplash.splashFactory,
+                                ),
+                                child: Text(
+                                  "Przypomnij hasło",
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
                             const Text(
                               "Nie masz konta?",
                               style: TextStyle(

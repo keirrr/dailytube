@@ -1,4 +1,4 @@
-import 'package:bartek_hub/widgets/display_all_videos.dart';
+import 'package:dailytube/widgets/display_all_videos.dart';
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
@@ -7,7 +7,8 @@ class CategoriesScreen extends StatefulWidget {
   final String? categoryTitle;
   final String? category;
 
-  const CategoriesScreen({Key? key, this.categoryTitle, this.category}) : super(key: key);
+  const CategoriesScreen({Key? key, this.categoryTitle, this.category})
+      : super(key: key);
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();

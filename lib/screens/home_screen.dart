@@ -44,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Align(
                       alignment: Alignment.center,
                       child: Image(
-                        height: 32,
-                        image: AssetImage('assets/images/bartekhub-logo.png'),
+                        height: 48,
+                        image: AssetImage('assets/images/dailytube-logo.png'),
                       ),
                     ),
                   ],

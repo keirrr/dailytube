@@ -1,3 +1,5 @@
+import 'package:dailytube/screens/profile_remind_password_info_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../bartek_color_palette.dart';
@@ -10,11 +12,23 @@ class ProfileRemindPassword extends StatefulWidget {
 }
 
 class _ProfileRemindPasswordState extends State<ProfileRemindPassword> {
+  final email = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          toolbarHeight: 80,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          title: Image(
+            height: 48,
+            image: AssetImage('assets/images/dailytube-logo.png'),
+          ),
+        ),
         extendBody: true,
         backgroundColor: BartekColorPalette.bartekGrey[900],
         body: Container(
@@ -22,22 +36,6 @@ class _ProfileRemindPasswordState extends State<ProfileRemindPassword> {
               const EdgeInsets.only(top: 40, right: 15, bottom: 55, left: 15),
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: const [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Image(
-                        height: 32,
-                        image: AssetImage('assets/images/bartekhub-logo.png'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -58,9 +56,10 @@ class _ProfileRemindPasswordState extends State<ProfileRemindPassword> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: SizedBox(
-                            width: 250,
+                            width: 300,
                             height: 40,
                             child: TextFormField(
+                              controller: email,
                               style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(10.0),
@@ -94,7 +93,17 @@ class _ProfileRemindPasswordState extends State<ProfileRemindPassword> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: ElevatedButton(
-                              onPressed: () => {},
+                              onPressed: () {
+                                resetPassword();
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ProfileRemindPasswordInfo(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 "Przypomnij hasło",
                                 style: Theme.of(context).textTheme.headline3,
@@ -125,5 +134,10 @@ class _ProfileRemindPasswordState extends State<ProfileRemindPassword> {
         ),
       ),
     );
+  }
+
+  Future resetPassword() async {
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: email.text.trim());
   }
 }
