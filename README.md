@@ -6,7 +6,8 @@ ChatCord is chat app created with Flutter, Dart and Firebase. It allows to watch
 * [Technologies](#technologies)
 
 ## Usage
-You can download apk file of app and install it on your Android: https://drive.google.com/file/d/1LTz5BCrLUf6u-vXIjvK0KBIhJvPfVcGx/view?usp=sharing
+You can download apk file of app and install it on your Android: https://drive.google.com/file/d/1LTz5BCrLUf6u-vXIjvK0KBIhJvPfVcGx/view?usp=sharing.
+
 Apk file is also in repository.
 
 Application requires registration but it doesn't require email verification so you can use imaginary email.
